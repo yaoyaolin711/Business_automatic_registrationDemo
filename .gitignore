@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+cases/*.json
+archives/
+screenshots/
+mock_mailbox/
+*.eml.txt
+.DS_Store
+~$*.docx
+.idea/
+.vscode/

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>工商注册流程 AI 化 Demo</title>
+  <link rel="stylesheet" href="/static/mock.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div>
+        <h1>工商注册流程 AI 化 Demo</h1>
+        <p class="muted" style="margin:6px 0 0">企微对接 → 确认单 → 建档 → 字段映射填表 → 回读校验 → 邮箱取号 → 通知人工</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="company_cn" value="享特集团乐思龙(香港)国际贸易有限公司" style="min-width:280px;padding:10px;border:1px solid #d5dde6" />
+        <button id="btn_create">新建企微群案件</button>
+      </div>
+    </div>
+
+    <section class="panel">
+      <div class="panel-hd">
+        <h2 id="chat_title">企微群对话（模拟）</h2>
+        <span class="muted" id="case_badge">未创建案件</span>
+      </div>
+      <div class="actions" id="action_bar" hidden>
+        <button class="secondary" id="btn_demo_fill">① 填充演示数据</button>
+        <button class="secondary" id="btn_confirm">② 确认提交</button>
+        <button class="secondary" id="btn_precheck">填前校验</button>
+        <button class="warn" id="btn_pipeline">③ 正常自动流程</button>
+        <button class="secondary" id="btn_skip">演示漏填拦截</button>
+        <button class="secondary" id="btn_wrong">演示错填拦截</button>
+        <button class="secondary" id="btn_finish">④ 人工确认完成</button>
+      </div>
+      <div class="chat" id="chat"></div>
+      <div class="composer">
+        <input id="chat_input" placeholder="输入客户消息，例如：可以用大陆手机号吗？ / 确认提交" disabled />
+        <button id="btn_send" disabled>发送</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-hd">
+        <h2>流程看板 / 校验报告</h2>
+        <span class="muted" id="status_label">—</span>
+      </div>
+      <ul class="pipeline" id="pipeline"></ul>
+      <div class="info" id="info">
+        <div class="empty">创建案件后，这里会显示公司信息、账号与归档路径。</div>
+      </div>
+      <div id="validation_box"></div>
+      <div class="fieldmap" id="fieldmap"></div>
+      <div class="shots" id="shots"></div>
+      <div class="logs" id="logs"></div>
+    </section>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

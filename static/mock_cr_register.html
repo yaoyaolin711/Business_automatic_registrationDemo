@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CR e-Services — Account Registration (Demo)</title>
+  <link rel="stylesheet" href="/static/mock.css" />
+</head>
+<body class="gov">
+  <header class="gov-header">
+    <div>
+      <div class="gov-brand">Companies Registry · Hong Kong</div>
+      <h1>e-Services Account Registration</h1>
+      <p class="muted">Demo page for RPA automation (ICRIS3EF mock) · fields use stable id + data-field</p>
+    </div>
+  </header>
+  <main class="gov-card">
+    <h2>Apply for System Account</h2>
+    <p id="page_hint" class="muted">RPA 按字段映射填写；提交前会回读校验。</p>
+    <form id="reg_form" onsubmit="return false;">
+      <label>Company Name (English)
+        <input id="company_name_en" name="company_name_en" data-field="company_name_en" data-required="true" />
+      </label>
+      <label>Company Name (Chinese)
+        <input id="company_name_cn" name="company_name_cn" data-field="company_name_cn" data-required="true" />
+      </label>
+      <label>Applicant Email
+        <input id="applicant_email" name="applicant_email" type="email" data-field="applicant_email" data-required="true" />
+      </label>
+      <label>Applicant Phone
+        <input id="applicant_phone" name="applicant_phone" data-field="applicant_phone" data-required="true" />
+      </label>
+      <label>Nature of Business
+        <input id="business_nature" name="business_nature" data-field="business_nature" data-required="true" />
+      </label>
+      <label>Share Capital (HKD)
+        <select id="capital" name="capital" data-field="capital" data-required="true">
+          <option value="10000">10,000</option>
+          <option value="50000">50,000</option>
+          <option value="100000">100,000</option>
+        </select>
+      </label>
+      <button id="btn_submit" type="button">Submit Application</button>
+    </form>
+    <div id="client_error" class="err" hidden></div>
+    <div id="result_ok" class="ok" hidden>
+      Application submitted. Account credentials will be sent by email.
+    </div>
+  </main>
+  <script>
+    document.getElementById('btn_submit').addEventListener('click', () => {
+      const required = [...document.querySelectorAll('[data-required="true"]')];
+      const missing = required.filter((el) => !(el.value || '').trim());
+      const err = document.getElementById('client_error');
+      if (missing.length) {
+        err.hidden = false;
+        err.textContent = 'Missing required fields: ' + missing.map((el) => el.dataset.field).join(', ');
+        document.getElementById('result_ok').hidden = true;
+        return;
+      }
+      err.hidden = true;
+      document.getElementById('result_ok').hidden = false;
+    });
+  </script>
+</body>
+</html>

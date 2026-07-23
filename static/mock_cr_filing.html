@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CR e-Services — Company Filing (Demo)</title>
+  <link rel="stylesheet" href="/static/mock.css" />
+</head>
+<body class="gov">
+  <header class="gov-header">
+    <div>
+      <div class="gov-brand">Companies Registry · Hong Kong</div>
+      <h1>ICRIS Electronic Filing</h1>
+      <p class="muted">Demo page for RPA automation (ICRIS3EP mock) · fields use stable id + data-field</p>
+    </div>
+  </header>
+  <main class="gov-card">
+    <section id="login_box">
+      <h2>Login</h2>
+      <label>Username<input id="username" data-field="username" /></label>
+      <label>Password<input id="password" type="password" data-field="password" /></label>
+      <button id="btn_login" type="button">Login</button>
+    </section>
+
+    <section id="filing_form" hidden>
+      <h2>Incorporation Particulars</h2>
+      <p class="muted">必填项带 data-required；RPA 提交前会回读比对。</p>
+      <label>Company Name (EN)<input id="reg_name_en" data-field="reg_name_en" data-required="true" /></label>
+      <label>Company Name (CN)<input id="reg_name_cn" data-field="reg_name_cn" data-required="true" /></label>
+      <label>Registered Office Address<input id="reg_address" data-field="reg_address" data-required="true" /></label>
+      <label>Nature of Business<input id="reg_nature" data-field="reg_nature" data-required="true" /></label>
+      <label>Share Capital<input id="reg_capital" data-field="reg_capital" data-required="true" /></label>
+      <h3>Director / Shareholder 1</h3>
+      <label>Name<input id="director_name" data-field="director_name" data-required="true" /></label>
+      <label>ID / Passport<input id="director_id" data-field="director_id" data-required="true" /></label>
+      <label>Shareholding<input id="director_share" data-field="director_share" data-required="true" /></label>
+      <label>Residential Address<input id="director_address" data-field="director_address" data-required="true" /></label>
+      <h3>Shareholder 2</h3>
+      <label>Name<input id="shareholder2_name" data-field="shareholder2_name" /></label>
+      <label>ID / Passport<input id="shareholder2_id" data-field="shareholder2_id" /></label>
+      <label>Shareholding<input id="shareholder2_share" data-field="shareholder2_share" /></label>
+      <button id="btn_submit_filing" type="button">Submit Filing</button>
+      <div id="client_error" class="err" hidden></div>
+    </section>
+
+    <div id="filing_ok" class="ok" hidden>
+      Filing submitted successfully. Please wait for registry processing.
+    </div>
+  </main>
+  <script>
+    document.getElementById('btn_login').addEventListener('click', () => {
+      document.getElementById('login_box').hidden = true;
+      document.getElementById('filing_form').hidden = false;
+    });
+    document.getElementById('btn_submit_filing').addEventListener('click', () => {
+      const required = [...document.querySelectorAll('#filing_form [data-required="true"]')];
+      const missing = required.filter((el) => !(el.value || '').trim());
+      const err = document.getElementById('client_error');
+      if (missing.length) {
+        err.hidden = false;
+        err.textContent = 'Missing required fields: ' + missing.map((el) => el.dataset.field).join(', ');
+        document.getElementById('filing_ok').hidden = true;
+        return;
+      }
+      err.hidden = true;
+      document.getElementById('filing_ok').hidden = false;
+    });
+  </script>
+</body>
+</html>
