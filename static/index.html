@@ -45,16 +45,24 @@
         <h2>流程看板 / 校验报告</h2>
         <span class="muted" id="status_label">—</span>
       </div>
-      <ul class="pipeline" id="pipeline"></ul>
-      <div class="info" id="info">
-        <div class="empty">创建案件后，这里会显示公司信息、账号与归档路径。</div>
+      <div class="panel-board-body">
+        <ul class="pipeline" id="pipeline"></ul>
+        <div class="info" id="info">
+          <div class="empty">创建案件后，这里会显示公司信息、账号与归档路径。</div>
+        </div>
+        <div id="validation_box"></div>
+        <div class="fieldmap" id="fieldmap"></div>
+        <div class="shots" id="shots"></div>
+        <div class="logs" id="logs"></div>
       </div>
-      <div id="validation_box"></div>
-      <div class="fieldmap" id="fieldmap"></div>
-      <div class="shots" id="shots"></div>
-      <div class="logs" id="logs"></div>
     </section>
   </div>
+
+  <div class="shot-lightbox" id="shot_lightbox" hidden>
+    <button type="button" class="shot-lightbox-close" id="shot_lightbox_close" aria-label="关闭">×</button>
+    <img id="shot_lightbox_img" alt="RPA screenshot enlarged" />
+  </div>
+
   <script src="/static/app.js"></script>
 </body>
 </html>

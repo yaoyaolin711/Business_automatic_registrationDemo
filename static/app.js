@@ -130,10 +130,30 @@ function renderSide(caseData) {
     const img = document.createElement("img");
     img.src = url + "?t=" + Date.now();
     img.alt = "RPA screenshot";
+    img.title = "点击放大查看";
+    img.addEventListener("click", () => openShotLightbox(img.src));
     shots.appendChild(img);
   }
 
   $("logs").textContent = (caseData.logs || []).join("\n");
+}
+
+function openShotLightbox(src) {
+  const box = $("shot_lightbox");
+  const img = $("shot_lightbox_img");
+  if (!box || !img) return;
+  img.src = src;
+  box.hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeShotLightbox() {
+  const box = $("shot_lightbox");
+  const img = $("shot_lightbox_img");
+  if (!box) return;
+  box.hidden = true;
+  if (img) img.removeAttribute("src");
+  document.body.style.overflow = "";
 }
 
 function escapeHtml(s) {
@@ -248,3 +268,15 @@ $("btn_pipeline").addEventListener("click", () => runPipeline("normal"));
 $("btn_skip").addEventListener("click", () => runPipeline("skip"));
 $("btn_wrong").addEventListener("click", () => runPipeline("wrong"));
 $("btn_finish").addEventListener("click", finishCase);
+
+$("shot_lightbox_close").addEventListener("click", (e) => {
+  e.stopPropagation();
+  closeShotLightbox();
+});
+$("shot_lightbox").addEventListener("click", (e) => {
+  if (e.target === $("shot_lightbox")) closeShotLightbox();
+});
+$("shot_lightbox_img").addEventListener("click", (e) => e.stopPropagation());
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !$("shot_lightbox").hidden) closeShotLightbox();
+});
